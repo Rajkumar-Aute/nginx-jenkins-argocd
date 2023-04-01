@@ -22,7 +22,7 @@ pipeline {
         sh 'docker push rajkumaraute/nginxcustom:$BUILD_NUMBER'
       }
     }
-    stage(update deployment.yaml file){
+    stage('update deployment.yaml file') {
                         sh "git config user.email rajkumaraute@gmail.com"
                         sh "git config user.name Rajkumar"
                         sh "cat deployment.yaml"
