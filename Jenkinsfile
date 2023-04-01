@@ -7,6 +7,7 @@ pipeline {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     GIT_USERNAME = credentials('GIT_USERNAME')
     GIT_PASSWORD = credentials('GIT_PASSWORD')
+    DOCKER-REPOSITORY = credentials('DOCKER-REPOSITORY')
 
 
   }
