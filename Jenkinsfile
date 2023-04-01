@@ -1,3 +1,40 @@
+pipeline(
+    agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials ('dockerhub')
+    }
+    
+
+    stages {
+        stage('SCM Checkout') {
+            steps{
+                git 'https://github.com/Rajkumar-Aute/nginx-jenkins-argocd.git'
+            }
+        }
+        stage('Build docker image'){
+            steps{
+                sh 'docker build -t rajkumaraute/nginxcustom:$BUILD_NUMBER .'
+            }
+        }
+        stage('Login to dockerhub'){
+
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('Docker image push'){
+            steps{
+                sh 'docker push rajkumaraute/nginxcustom:$BUILD_NUMBER'
+            }
+        }
+)
+post {
+    always {
+        sh 'docker logout'
+    }
+}
+
+/*
 node {
     def app
     stage ('Clone reposotory' ) {
@@ -40,3 +77,5 @@ node {
 
 
 }
+
+*/
