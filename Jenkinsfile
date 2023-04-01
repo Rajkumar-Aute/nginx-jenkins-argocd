@@ -25,7 +25,7 @@ pipeline {
     stage('update deployment.yaml file') {
         steps{
         sh "chmod +x -R ${env.WORKSPACE}"
-        sh "./update-yaml.sh"
+        sh "./updateyaml.sh"
         //sh "git config user.email rajkumaraute@gmail.com"
         //sh "git config user.name Rajkumar"
         //sh "cat deployment.yaml"
