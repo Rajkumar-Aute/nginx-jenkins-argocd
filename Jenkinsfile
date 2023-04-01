@@ -24,17 +24,18 @@ pipeline {
     }
     stage('update deployment.yaml file') {
         steps{
-        sh "chmod +x -R ${env.WORKSPACE}"
-        sh "cat ./script/updateyaml.sh"
-        sh "./script/updateyaml.sh"
-        //sh "git config user.email rajkumaraute@gmail.com"
-        //sh "git config user.name Rajkumar"
-        //sh "cat deployment.yaml"
-        //sh "sed -i 's+$(DOCKER-REPOSITORY).*+$(DOCKER-REPOSITORY):$BUILD_NUMBER+g' deployment.yaml"
-        //sh "cat deployment.yaml"
-        //sh "git add ."
-        //sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
-        //sh "git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/argocd-manifest.git {{branch}}"
+            sh "echo Updating yaml file"
+            sh "chmod +x -R ${env.WORKSPACE}"
+            sh "cat ./script/updateyaml.sh"
+            sh "./script/updateyaml.sh"
+            //sh "git config user.email rajkumaraute@gmail.com"
+            //sh "git config user.name Rajkumar"
+            //sh "cat deployment.yaml"
+            //sh "sed -i 's+$(DOCKER-REPOSITORY).*+$(DOCKER-REPOSITORY):$BUILD_NUMBER+g' deployment.yaml"
+            //sh "cat deployment.yaml"
+            //sh "git add ."
+            //sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
+            //sh "git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/argocd-manifest.git {{branch}}"
         }
     }
   }
