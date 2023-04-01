@@ -1,5 +1,7 @@
 #!bin/bash
 git config user.email rajkumaraute@gmail.com
+git config --global --unset credential.helper
+git config --system --unset credential.helper
 git config user.name Rajkumar
 cat deployment.yaml
 sed -i 's+$(DOCKER_REPOSITORY).*+$(DOCKER_REPOSITORY):$BUILD_NUMBER+g' deployment.yaml
