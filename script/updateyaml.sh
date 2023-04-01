@@ -2,7 +2,7 @@
 git config user.email rajkumaraute@gmail.com
 git config user.name Rajkumar
 cat deployment.yaml
-sed -i 's+$(DOCKER-REPOSITORY).*+$(DOCKER-REPOSITORY):$BUILD_NUMBER+g' deployment.yaml
+sed -i 's+$(DOCKER_REPOSITORY).*+$(DOCKER_REPOSITORY):$BUILD_NUMBER+g' deployment.yaml
 cat deployment.yaml
 git add .
 git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
