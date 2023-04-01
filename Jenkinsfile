@@ -5,6 +5,10 @@ pipeline {
   }
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    GIT_USERNAME = credentials('GIT_USERNAME')
+    GIT_PASSWORD = credentials('GIT_PASSWORD')
+
+
   }
   stages {
     stage('Build') {
