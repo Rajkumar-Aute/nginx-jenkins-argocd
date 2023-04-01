@@ -43,7 +43,7 @@ pipeline {
       sh 'docker logout'
     }
   }
-}
+//}
 /*
 pipeline(
     environment {
