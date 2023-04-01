@@ -24,8 +24,9 @@ pipeline {
     }
     stage('update deployment.yaml file') {
         steps{
-            sh "echo Updating yaml file"
+            git url: "https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/argocd-manifest.git, branch: 'main'"
             sh "chmod +x -R ${env.WORKSPACE}"
+            sh "chmod +x ./script/updateyaml.sh"
             sh "cat ./script/updateyaml.sh"
             sh "./script/updateyaml.sh"
             //sh "git config user.email rajkumaraute@gmail.com"
