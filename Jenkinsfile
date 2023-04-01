@@ -6,25 +6,26 @@ pipeline {
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
   }
-  stages {
-    stage('Build') {
-      steps {
-        sh 'docker build -t rajkumaraute/nginxcustom:$BUILD_NUMBER .'
-      }
-    }
-    stage('Login') {
-      steps {
-        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-      }
-    }
-    stage('Push') {
-      steps {
-        sh 'docker push rajkumaraute/nginxcustom:$BUILD_NUMBER'
-      }
-    }
+//  stages {
+//    stage('Build') {
+//      steps {
+//        sh 'docker build -t rajkumaraute/nginxcustom:$BUILD_NUMBER .'
+//      }
+//    }
+//    stage('Login') {
+//      steps {
+//        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+//      }
+//    }
+//    stage('Push') {
+//      steps {
+//        sh 'docker push rajkumaraute/nginxcustom:$BUILD_NUMBER'
+//      }
+//    }
     stage('update deployment.yaml file') {
         steps{
         sh "chmod +x -R ${env.WORKSPACE}"
+        sh "cat ./script/updateyaml.sh"
         sh "./script/updateyaml.sh"
         //sh "git config user.email rajkumaraute@gmail.com"
         //sh "git config user.name Rajkumar"
