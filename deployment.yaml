@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: nginx-jenkins-argocd
-          image: rajkumaraute/nginxcustom:95
+          image: rajkumaraute/nginxcustom:48
           ports:
             - containerPort: 80
