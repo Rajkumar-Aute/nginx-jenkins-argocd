@@ -4,10 +4,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub') // docker hub username and password/token has been created in Jenkins global secret with name "dockerhub"
-    dockerhub_url = "rajkumaraute/nginxcustom" // dockerhub account name and image name defined
-    //dockerhub_url = credentials('DOCKER_URL') # can be added in global secret
-    GITHUB = credentials('github')
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
 
 
   }
@@ -19,7 +16,7 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh 'docker build -t $dockerhub_url:$BUILD_NUMBER .'
+        sh 'docker build -t rajkumaraute/nginxcustom:$BUILD_NUMBER .'
       }
     }
     stage('Login') {
@@ -29,7 +26,7 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push $dockerhub_url:$BUILD_NUMBER'
+        sh 'docker push rajkumaraute/nginxcustom:$BUILD_NUMBER'
       }
     }
     stage('update deployment.yaml file') {
@@ -41,7 +38,7 @@ pipeline {
                         sh "git config user.email rajkumaraute@gmail.com"
                         sh "git config user.name Rajkumar"
                         sh "cat deployment.yaml"
-                        sh "sed -i 's+$dockerhub_url.*+$dockerhub_url:$BUILD_NUMBER+g' deployment.yaml"
+                        sh "sed -i 's+rajkumaraute/nginxcustom.*+rajkumaraute/nginxcustom:$BUILD_NUMBER+g' deployment.yaml"
                         sh "cat deployment.yaml"
                         sh "git add ."
                         sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
