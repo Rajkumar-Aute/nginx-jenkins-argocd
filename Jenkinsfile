@@ -15,7 +15,7 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh 'docker build -t rajkumaraute/nginxcustom:$BUILD_NUMBER .'
+        sh 'docker build -t $DOCKERHUB_URL:$BUILD_NUMBER .'
       }
     }
     stage('Login') {
@@ -25,7 +25,7 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push rajkumaraute/nginxcustom:$BUILD_NUMBER'
+        sh 'docker push $DOCKERHUB_URL:$BUILD_NUMBER'
       }
     }
     stage('update deployment.yaml file') {
@@ -37,7 +37,7 @@ pipeline {
                         sh "git config user.email rajkumaraute@gmail.com"
                         sh "git config user.name Rajkumar"
                         sh "cat deployment.yaml"
-                        sh "sed -i 's+rajkumaraute/nginxcustom.*+rajkumaraute/nginxcustom:$BUILD_NUMBER+g' deployment.yaml"
+                        sh "sed -i 's+$DOCKERHUB_URL.*+$DOCKERHUB_URL:$BUILD_NUMBER+g' deployment.yaml"
                         sh "cat deployment.yaml"
                         sh "git add ."
                         sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
