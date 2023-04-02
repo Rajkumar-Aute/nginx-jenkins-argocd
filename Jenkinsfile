@@ -6,6 +6,8 @@ pipeline {
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub') // docker hub username and password/token has been created in Jenkins global secret with name "dockerhub"
     dockerhub_url = "rajkumaraute/nginxcustom" // dockerhub account name and image name defined
+    //dockerhub_url = credentials('DOCKER_URL') # can be added in global secret
+    GITHUB = credentials('github')
 
 
   }
@@ -43,7 +45,7 @@ pipeline {
                         sh "cat deployment.yaml"
                         sh "git add ."
                         sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
-                        sh "git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main"
+                        sh "git push --force https://${GITHUB_USR}:${GITHUB_PSW}@github.com/${GITHUB_USR}/nginx-jenkins-argocd.git HEAD:main"
       
                 }
         
