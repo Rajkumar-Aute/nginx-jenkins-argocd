@@ -41,7 +41,7 @@ pipeline {
                         sh "git config user.email rajkumaraute@gmail.com"
                         sh "git config user.name Rajkumar"
                         sh "cat deployment.yaml"
-                        sh "sed -i 's+$dockerhub_url.*+dockerhub_url:$BUILD_NUMBER+g' deployment.yaml"
+                        sh "sed -i 's+$dockerhub_url.*+$dockerhub_url:$BUILD_NUMBER+g' deployment.yaml"
                         sh "cat deployment.yaml"
                         sh "git add ."
                         sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
