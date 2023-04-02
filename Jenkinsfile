@@ -4,11 +4,8 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-   // GIT_USERNAME = credentials('GIT_USERNAME')
-   // GIT_PASSWORD = credentials('GIT_PASSWORD')
-   // DOCKER_REPOSITORY = credentials('DOCKER_REPOSITORY')
-   dockerhub_url = "rajkumaraute/nginxcustom"
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub') // docker hub username and password/token has been created in Jenkins global secret with name "dockerhub"
+    dockerhub_url = "rajkumaraute/nginxcustom" // dockerhub account name and image name defined
 
 
   }
@@ -20,7 +17,7 @@ pipeline {
     }
     stage('Build') {
       steps {
-        sh 'docker build -t rajkumaraute/nginxcustom:$BUILD_NUMBER .'
+        sh 'docker build -t $dockerhub_url:$BUILD_NUMBER .'
       }
     }
     stage('Login') {
@@ -30,7 +27,7 @@ pipeline {
     }
     stage('Push') {
       steps {
-        sh 'docker push rajkumaraute/nginxcustom:$BUILD_NUMBER'
+        sh 'docker push $dockerhub_url:$BUILD_NUMBER'
       }
     }
     stage('update deployment.yaml file') {
