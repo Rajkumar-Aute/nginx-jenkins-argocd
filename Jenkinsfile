@@ -5,6 +5,7 @@ pipeline {
   }
   environment {
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    DOCKERHUB_URL = rajkumaraute/nginxcustom   
   }
   stages {
     stage('clone reposotory'){
