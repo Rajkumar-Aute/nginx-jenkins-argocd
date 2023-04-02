@@ -4,8 +4,8 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    DOCKERHUB_URL = rajkumaraute/nginxcustom   
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub') // store docker hub username and password/token
+    DOCKERHUB_URL = "rajkumaraute/nginxcustom" // docker hub url username and image name 
   }
   stages {
     stage('clone reposotory'){
