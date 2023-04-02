@@ -13,7 +13,9 @@ pipeline {
   }
   stages {
     stage('clone reposotory'){
+        steps {
         checkout scm
+        }
     }
     stage('Build') {
       steps {
@@ -46,8 +48,8 @@ pipeline {
     //        //sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
     //        //sh "git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/argocd-manifest.git {{branch}}"
     //    
-    }  
-        script {
+      
+            script {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         //def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
@@ -64,6 +66,7 @@ pipeline {
         
         }
     }
+ }
   }
   post {
     always {
