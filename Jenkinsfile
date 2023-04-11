@@ -33,9 +33,10 @@ pipeline {
                script {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                      sh "chmod +x -R ${env.WORKSPACE}"
+                      sh "https://github.com/Rajkumar-Aute/nginx-jenkins-argocd/blob/main/script/updateyaml.sh"
                       sh "pwd && ls -al"
-                      sh "./script/updateyaml.sh"
+                      sh "chmod +x updateyaml.sh"
+                      sh "sh ./script/updateyaml.sh"
                         //def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
                         //sh "git config user.email rajkumaraute@gmail.com"
                         //sh "git config user.name Rajkumar"
