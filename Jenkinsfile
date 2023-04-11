@@ -33,15 +33,16 @@ pipeline {
                script {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                      sh('./script/updateyaml.sh')
                         //def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-                        sh "git config user.email rajkumaraute@gmail.com"
-                        sh "git config user.name Rajkumar"
-                        sh "cat deployment.yaml"
-                        sh "sed -i 's+$DOCKERHUB_URL.*+$DOCKERHUB_URL:$BUILD_NUMBER+g' deployment.yaml"
-                        sh "cat deployment.yaml"
-                        sh "git add ."
-                        sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
-                        sh "git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main"
+                        //sh "git config user.email rajkumaraute@gmail.com"
+                        //sh "git config user.name Rajkumar"
+                        //sh "cat deployment.yaml"
+                        //sh "sed -i 's+$DOCKERHUB_URL.*+$DOCKERHUB_URL:$BUILD_NUMBER+g' deployment.yaml"
+                        //sh "cat deployment.yaml"
+                        //sh "git add ."
+                        //sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
+                        //sh "git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main"
       
                 }
         
