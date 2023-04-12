@@ -33,7 +33,7 @@ pipeline {
                script {
                   withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-                        sh """#!/bin/bash
+                        sh """
                         cat deployment.yaml
                         echo "update yaml file"
                         cat <<-EOF>deployment.yaml
