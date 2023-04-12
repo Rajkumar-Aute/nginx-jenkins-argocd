@@ -37,7 +37,32 @@ pipeline {
                         sh "git config user.email rajkumaraute@gmail.com"
                         sh "git config user.name Rajkumar"
                         sh "cat deployment.yaml"
-                        sh "sed -i 's+$DOCKERHUB_URL.*+$DOCKERHUB_URL:$BUILD_NUMBER+g' deployment.yaml"
+                        //sh "sed -i 's+$DOCKERHUB_URL.*+$DOCKERHUB_URL:$BUILD_NUMBER+g' deployment.yaml"
+                        sh "cat <<EOF >deployment.yaml
+                            # Created on $(date)
+                            apiVersion: apps/v1
+                            kind: Deployment
+                            metadata:
+                              name: nginx-jenkins-argocd
+                              labels:
+                                app: nginx-jenkins-argocd
+                            spec:
+                              replicas: 1
+                              selector:
+                                matchLabels:
+                                  app: nginx-jenkins-argocd
+                              template:
+                                metadata:
+                                  labels:
+                                    app: nginx-jenkins-argocd
+                                spec:
+                                  containers:
+                                    - name: nginx-jenkins-argocd
+                                      image: rajkumaraute/nginxcustom:$BUILD_NUMBER
+                                      ports:
+                                        - containerPort: 80
+
+                            EOF"
                         sh "cat deployment.yaml"
                         sh "git add ."
                         sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
