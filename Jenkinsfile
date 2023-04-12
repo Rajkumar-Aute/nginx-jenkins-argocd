@@ -38,7 +38,7 @@ pipeline {
                         git config user.email rajkumaraute@gmail.com
                         git config user.name Rajkumar
                         cat deployment.yaml
-                        #//sh "sed -i 's+$DOCKERHUB_URL.*+$DOCKERHUB_URL:$BUILD_NUMBER+g' deployment.yaml"
+                        echo "update yaml file" && \
                         cat <<EOF >deployment.yaml
                         apiVersion: apps/v1
                         kind: Deployment
@@ -61,7 +61,8 @@ pipeline {
                                   image: rajkumaraute/nginxcustom:$BUILD_NUMBER
                                   ports:
                                     - containerPort: 80
-                        EOF
+                        EOF && \
+                        echo "cat updated deploymenet.yaml file"
                         cat deployment.yaml
                         git add .
                         git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
