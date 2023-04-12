@@ -34,40 +34,39 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-                        sh "git config user.email rajkumaraute@gmail.com"
-                        sh "git config user.name Rajkumar"
-                        sh "cat deployment.yaml"
-                        //sh "sed -i 's+$DOCKERHUB_URL.*+$DOCKERHUB_URL:$BUILD_NUMBER+g' deployment.yaml"
-                        sh "cat <<EOF >deployment.yaml
-                            # Created on $(date)
-                            apiVersion: apps/v1
-                            kind: Deployment
+                        sh """#!/bin/bash
+                        git config user.email rajkumaraute@gmail.com
+                        git config user.name Rajkumar
+                        cat deployment.yaml
+                        #//sh "sed -i 's+$DOCKERHUB_URL.*+$DOCKERHUB_URL:$BUILD_NUMBER+g' deployment.yaml"
+                        cat <<EOF >deployment.yaml
+                        # Created on $(date)
+                        apiVersion: apps/v1
+                        kind: Deployment
+                        metadata:
+                          name: nginx-jenkins-argocd
+                          labels:
+                            app: nginx-jenkins-argocd
+                        spec:
+                          replicas: 1
+                          selector:
+                            matchLabels:
+                              app: nginx-jenkins-argocd
+                          template:
                             metadata:
-                              name: nginx-jenkins-argocd
                               labels:
                                 app: nginx-jenkins-argocd
                             spec:
-                              replicas: 1
-                              selector:
-                                matchLabels:
-                                  app: nginx-jenkins-argocd
-                              template:
-                                metadata:
-                                  labels:
-                                    app: nginx-jenkins-argocd
-                                spec:
-                                  containers:
-                                    - name: nginx-jenkins-argocd
-                                      image: rajkumaraute/nginxcustom:$BUILD_NUMBER
-                                      ports:
-                                        - containerPort: 80
-
-                            EOF"
-                        sh "cat deployment.yaml"
-                        sh "git add ."
-                        sh "git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'"
-                        sh "git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main"
-      
+                              containers:
+                                - name: nginx-jenkins-argocd
+                                  image: rajkumaraute/nginxcustom:$BUILD_NUMBER
+                                  ports:
+                                    - containerPort: 80
+                        EOF
+                        cat deployment.yaml
+                        git add .
+                        git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
+                        git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main      
                 }
         
         }
