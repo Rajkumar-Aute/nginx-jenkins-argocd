@@ -31,8 +31,7 @@ pipeline {
     stage('update deployment.yaml file') {
         steps{
                script {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                  withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
                         sh """#!/bin/bash
                         git config user.email rajkumaraute@gmail.com
@@ -68,8 +67,6 @@ pipeline {
                         git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
                         git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main
                         """
-                }
-        
                 }
               }
         }
