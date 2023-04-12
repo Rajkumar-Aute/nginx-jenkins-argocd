@@ -38,7 +38,7 @@ pipeline {
                         git config user.name Rajkumar
                         cat deployment.yaml
                         echo "update yaml file"
-                        cat <<EOF >deployment.yaml
+                        cat <<EOF>deployment.yaml
                         apiVersion: apps/v1
                         kind: Deployment
                         metadata:
