@@ -33,8 +33,12 @@ pipeline {
                script {
                   withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-                        sh """#!/bin/bash
-                        cat <<-EOF> deployment.yaml
+                        sh """
+                        git config user.email rajkumaraute@gmail.com
+                        git config user.name Rajkumar
+                        cat deployment.yaml
+                        echo "update yaml file"
+                        cat <<EOF>deployment.yaml
                         apiVersion: apps/v1
                         kind: Deployment
                         metadata:
@@ -56,8 +60,13 @@ pipeline {
                                   image: rajkumaraute/nginxcustom:$BUILD_NUMBER
                                   ports:
                                     - containerPort: 80
-                        EOF"""
-                }
+                        EOF
+                        echo "cat updated deploymenet.yaml file"
+                        cat deployment.yaml
+                        git add .
+                        git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
+                        git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main
+                        """                }
               }
         }
     }
