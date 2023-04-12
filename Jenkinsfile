@@ -36,8 +36,8 @@ pipeline {
                         sh """#!/bin/bash
                         git config user.email rajkumaraute@gmail.com
                         git config user.name Rajkumar
-                        cat deployment.yaml
-                        echo "update yaml file" && \
+                        cat deployment.yaml && \
+                        echo "update yaml file"
                         cat <<EOF >deployment.yaml
                         apiVersion: apps/v1
                         kind: Deployment
