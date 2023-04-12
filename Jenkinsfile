@@ -57,10 +57,10 @@ pipeline {
                                   ports:
                                     - containerPort: 80
                         EOF"""
-                        sh """#!/bin/bash
+//                        sh """#!/bin/bash
 //                        git config user.email rajkumaraute@gmail.com
 //                        git config user.name Rajkumar
-                        cat deployment.yaml
+//                        cat deployment.yaml
 //                        echo "update yaml file"
 //                        cat <<EOF>deployment.yaml
 //                        apiVersion: apps/v1
@@ -90,7 +90,7 @@ pipeline {
 //                        git add .
 //                        git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
 //                        git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main
-                        """
+//                        """
                 }
               }
         }
