@@ -1,21 +1,23 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-jenkins-argocd
-  labels:
-    app: nginx-jenkins-argocd
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx-jenkins-argocd
-  template:
-    metadata:
-      labels:
-        app: nginx-jenkins-argocd
-    spec:
-      containers:
-        - name: nginx-jenkins-argocd
-          image: rajkumaraute/nginxcustom:14
-          ports:
-            - containerPort: 80
+                        apiVersion: apps/v1
+                        kind: Deployment
+                        metadata:
+                          name: nginx-jenkins-argocd
+                          labels:
+                            app: nginx-jenkins-argocd
+                        spec:
+                          replicas: 1
+                          selector:
+                            matchLabels:
+                              app: nginx-jenkins-argocd
+                          template:
+                            metadata:
+                              labels:
+                                app: nginx-jenkins-argocd
+                            spec:
+                              containers:
+                                - name: nginx-jenkins-argocd
+                                  image: rajkumaraute/nginxcustom:36
+                                  ports:
+                                    - containerPort: 80
+                        EOF
+                        
