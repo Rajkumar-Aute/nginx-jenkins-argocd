@@ -34,7 +34,7 @@ pipeline {
                   withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
                         sh """
-                        cat <<EOF>deployment.yaml
+                        cat <<-EOF>deployment.yaml
                         apiVersion: apps/v1
                         kind: Deployment
                         metadata:
@@ -56,8 +56,7 @@ pipeline {
                                   image: rajkumaraute/nginxcustom:$BUILD_NUMBER
                                   ports:
                                     - containerPort: 80
-                        EOF
-                        """
+                        EOF"""
                         sh """#!/bin/bash
                         git config user.email rajkumaraute@gmail.com
                         git config user.name Rajkumar
