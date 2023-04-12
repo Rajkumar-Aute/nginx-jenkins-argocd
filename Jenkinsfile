@@ -33,30 +33,30 @@ pipeline {
                script {
                   withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
-                        sh """
-                        cat <<-EOF>deployment.yaml
-                        apiVersion: apps/v1
-                        kind: Deployment
-                        metadata:
-                          name: nginx-jenkins-argocd
-                          labels:
-                            app: nginx-jenkins-argocd
-                        spec:
-                          replicas: 1
-                          selector:
-                            matchLabels:
-                              app: nginx-jenkins-argocd
-                          template:
-                            metadata:
-                              labels:
-                                app: nginx-jenkins-argocd
-                            spec:
-                              containers:
-                                - name: nginx-jenkins-argocd
-                                  image: rajkumaraute/nginxcustom:$BUILD_NUMBER
-                                  ports:
-                                    - containerPort: 80
-                        """
+sh """
+cat <<-EOF>deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-jenkins-argocd
+  labels:
+    app: nginx-jenkins-argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-jenkins-argocd
+  template:
+    metadata:
+      labels:
+        app: nginx-jenkins-argocd
+    spec:
+      containers:
+        - name: nginx-jenkins-argocd
+          image: rajkumaraute/nginxcustom:$BUILD_NUMBER
+          ports:
+            - containerPort: 80
+"""
                         sh """#!/bin/bash
                         git config user.email rajkumaraute@gmail.com
                         git config user.name Rajkumar
