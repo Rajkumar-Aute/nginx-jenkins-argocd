@@ -34,8 +34,6 @@ pipeline {
                   withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
                         def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
                         sh """#!/bin/bash
-                        git config user.email rajkumaraute@gmail.com
-                        git config user.name Rajkumar
                         cat deployment.yaml
                         echo "update yaml file"
                         cat <<EOF>deployment.yaml
@@ -63,10 +61,41 @@ pipeline {
                         EOF
                         echo "cat updated deploymenet.yaml file"
                         cat deployment.yaml
-                        git add .
-                        git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
-                        git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main
                         """
+//                        sh """#!/bin/bash
+//                        git config user.email rajkumaraute@gmail.com
+//                        git config user.name Rajkumar
+//                        cat deployment.yaml
+//                        echo "update yaml file"
+//                        cat <<EOF>deployment.yaml
+//                        apiVersion: apps/v1
+//                        kind: Deployment
+//                        metadata:
+//                          name: nginx-jenkins-argocd
+//                          labels:
+//                            app: nginx-jenkins-argocd
+//                        spec:
+//                          replicas: 1
+//                          selector:
+//                            matchLabels:
+//                              app: nginx-jenkins-argocd
+//                          template:
+//                            metadata:
+//                              labels:
+//                                app: nginx-jenkins-argocd
+//                            spec:
+//                              containers:
+//                                - name: nginx-jenkins-argocd
+//                                  image: rajkumaraute/nginxcustom:$BUILD_NUMBER
+//                                  ports:
+//                                    - containerPort: 80
+//                        EOF
+//                        echo "cat updated deploymenet.yaml file"
+//                        cat deployment.yaml
+//                        git add .
+//                        git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
+//                        git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main
+//                        """
                 }
               }
         }
