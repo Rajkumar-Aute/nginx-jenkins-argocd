@@ -32,11 +32,11 @@ pipeline {
         steps{
                script {
                   withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
-                        def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
+                        //def encodedPassword = URLEncoder.encode("$GIT_PASSWORD",'UTF-8')
                         sh """
                         cat deployment.yaml
                         echo "update yaml file"
-                        cat <<-EOF>deployment.yaml
+                        cat <<-EOF> deployment.yaml
                         apiVersion: apps/v1
                         kind: Deployment
                         metadata:
@@ -59,7 +59,6 @@ pipeline {
                                   ports:
                                     - containerPort: 80
                         EOF
-                        echo "cat updated deploymenet.yaml file"
                         cat deployment.yaml
                         """
 //                        sh """#!/bin/bash
