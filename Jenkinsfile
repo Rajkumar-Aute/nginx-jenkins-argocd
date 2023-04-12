@@ -56,7 +56,7 @@ pipeline {
                                   image: rajkumaraute/nginxcustom:$BUILD_NUMBER
                                   ports:
                                     - containerPort: 80
-                        EOF"""
+                        """
                         sh """#!/bin/bash
                         git config user.email rajkumaraute@gmail.com
                         git config user.name Rajkumar
