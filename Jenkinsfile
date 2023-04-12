@@ -40,7 +40,7 @@ pipeline {
                         cat deployment.yaml
                         #//sh "sed -i 's+$DOCKERHUB_URL.*+$DOCKERHUB_URL:$BUILD_NUMBER+g' deployment.yaml"
                         cat <<EOF >deployment.yaml
-                        # Created on $(date)
+                        # Created on $date
                         apiVersion: apps/v1
                         kind: Deployment
                         metadata:
