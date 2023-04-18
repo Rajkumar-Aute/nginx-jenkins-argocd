@@ -64,6 +64,7 @@ spec:
                         echo "update yaml file"
                         echo "cat updated deploymenet.yaml file"
                         cat deployment.yaml
+                        echo ${GIT_BRANCH}
                         git add .
                         git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
                         git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main
