@@ -57,18 +57,18 @@ spec:
           ports:
             - containerPort: 80
 """
-                        sh """#!/bin/bash
-                        git config user.email rajkumaraute@gmail.com
-                        git config user.name Rajkumar
-                        cat deployment.yaml
-                        echo "update yaml file"
-                        echo "cat updated deploymenet.yaml file"
-                        cat deployment.yaml
-                        echo ${GIT_BRANCH}
-                        git add .
-                        git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
-                        git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main
-                        """
+#                        sh """#!/bin/bash
+#                        git config user.email rajkumaraute@gmail.com
+#                        git config user.name Rajkumar
+#                        cat deployment.yaml
+#                        echo "update yaml file"
+#                        echo "cat updated deploymenet.yaml file"
+#                        cat deployment.yaml
+#                        echo ${GIT_BRANCH}
+#                        git add .
+#                        git commit -m 'Done by Jenkins Job update manifest: ${env.BUILD_NUMBER}'
+#                        git push --force https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/nginx-jenkins-argocd.git HEAD:main
+#                        """
                   }
               }
         }
